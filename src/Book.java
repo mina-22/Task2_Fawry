@@ -90,7 +90,7 @@ public class Book {
         Main.Books.add(demo);
         System.out.println("Book is Added");
     }
-    public static int ChooseBookByISBN(boolean x)
+    public static int ChooseBookByISBN()
     {
         if (Main.Books.size() == 0) {
             System.out.println("NO Books is Found");
@@ -99,7 +99,7 @@ public class Book {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter ISBN you want to delete");
         for(Book book : Main.Books){
-            if(x && book instanceof Demo){
+            if( book instanceof Demo){
                 continue;
             }
             System.out.println("ISBN: " + book.ISBN + " - Book Name: " + book.Title);
@@ -128,15 +128,22 @@ public class Book {
     }
 
     public static void DeleteBook(){
-        int idx = ChooseBookByISBN(false);
-        Main.Books.remove(idx);
-        System.out.println("Book is Removed");
+        System.out.println("Enter num of years that make book outdate");
+       int years = Validation.chooseInLimitedSize(2025);
+       for(Book book:Main.Books)
+       {
+           if(book.PublishedYear <= 2025 - years)
+           {
+               Main.Books.remove(book);
+           }
+       }
+        System.out.println("Books is Removed");
 
     }
     public static IServices  BuyBook()
     {
         Scanner in = new Scanner(System.in);
-        int idx = ChooseBookByISBN(true);
+        int idx = ChooseBookByISBN();
         Book book = Main.Books.get(idx);
 
         if(book instanceof EBook)
